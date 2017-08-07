@@ -6,6 +6,7 @@ import shutil
 
 #shutil.copy("03_04_file","03_04_file.swp")
 
+
 f = open("03_04_file","r",encoding="utf-8")
 f_new = open("03_04_file.swp","w",encoding="utf-8")
 
