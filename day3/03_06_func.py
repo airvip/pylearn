@@ -19,3 +19,6 @@ x2=func2()
 
 print("func1 return is %s" %x1)
 print("func2 return is %s" %x2)
+
+with open("03_04_file","r",encoding="utf-8") as f:
+    print(f.read())
