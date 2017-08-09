@@ -7,9 +7,9 @@
 import time
 
 def timer(func):
-    def deco():
+    def deco(*args,**kwargs):
         start_time = time.time()
-        func()
+        func(*args,**kwargs)
         end_time = time.time()
         print("the function run time is %s" %(end_time-start_time))
     return deco
@@ -20,13 +20,14 @@ def test1():
     print("in the test1")
 
 @timer
-def test2():
+def test2(name):
     time.sleep(2)
-    print("in the test2")
+    print("in the test2","name is %s" %(name))
 
 
 # test1 = timer(test1)
 test1()
+test2('airvip')
 
 #新增功能却修改了调用方式
 # deco(test1)
