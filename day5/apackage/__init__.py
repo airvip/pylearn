@@ -3,3 +3,5 @@
 # Created by airvip on 2017/8/12 22:51.
 
 print("in the apackage")
+
+from . import test1
