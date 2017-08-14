@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Request>
+    <TradeCode>4003</TradeCode>
+    <serviceId>SchedulingStop</serviceId>
+    <orgCode>0001</orgCode>
+    <branchId>2</branchId>
+    <systemId>2017-04-06</systemId>
+    <tradeTime>17:52:59</tradeTime>
+    <data>
+        <OrganId name="sch_id">1000791</OrganId>
+        <OrganSchedulingId name="tar_id">2708||145</OrganSchedulingId>
+        <WorkType name="time_type">2</WorkType>
+    </data>
+</Request>
