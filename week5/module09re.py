@@ -30,3 +30,12 @@ print(res.group())
 
 res = re.search("#.+#","airvip#123#lasy123")
 print(res.group())
+
+res = re.search("[0-9]{3}","a2b1c234sd")
+print(res.group())
+
+res = re.findall("[0-9]{1,3}","a2b1c234sd")
+print(res)
+
+res = re.search("abc|ABC","ABCabcCD")
+print(res.group())
