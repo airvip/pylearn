@@ -62,7 +62,7 @@ print(res)
 
 res = re.search("\s+","\r    \n")
 print(res)
-'''
+
 
 res = re.search("(?P<id>[0-9]+)","sbc1234ds")
 print(res)
@@ -80,4 +80,21 @@ res = re.split("[0-9]+","ab23sd32b45ds")
 print(res)
 
 res = re.sub("[0-9]+","**","ab23sd32b45ds",count=0)
+print(res)
+'''
+
+
+res = re.search(r"\\","abc\\12dsfH")
+print(res)
+
+res = re.search(r"\\",r"abc\12")
+print(res)
+
+res = re.search("[a-z]{3}","2sAsi",flags=re.I)
+print(res)
+
+
+res = re.search("[a-z]+s$","addd\nfdasds\r\nsdfsds")
+print(res)
+res = re.search("[a-z]+s$","addd\nfdasds\r\nsdfsds",flags=re.M)
 print(res)
