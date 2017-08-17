@@ -15,12 +15,16 @@ print(type(Foo))
 
 #装逼方式创建类
 def func(self):
-    print("hello world | airvip")
+    print("hello %s"%self.name)
 
-Foo = type('Foo',(),{'func':func})
-print(type(Foo))
-# Foo1 = type('Foo1',(object),{'func':func})
-# print(type(Foo1))
+def __init__(self,name,age):
+    self.name = name
+    self.age = name
 
-f = Foo()
+# Foo = type('Foo',(),{'func':func,'__init__':__init__})
+# print(type(Foo))
+Foo1 = type('Foo1',(object,),{'func':func,'__init__':__init__})
+print(type(Foo1))
+
+f = Foo1("airvip",21)
 f.func()
