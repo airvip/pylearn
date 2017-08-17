@@ -23,8 +23,23 @@ class Dog(object):
     def __call__(self, *args, **kwargs):
         print("running call",args,kwargs)
 
+    def __str__(self):
+        return "<obj:%s>"%self.name
+
+
 
 d = Dog("larui")
+print(d)
+
+
+
+
+
+
+'''
+print(d.__dict__)#打印所有实例属性，不包括类属性
+print(Dog.__dict__)#打印类里的所有属性，不包括实例属性
+
 d(1,2,3,lay="airvip")
 
 Dog("mm")(1,2,3,lay="airvip")
@@ -34,3 +49,4 @@ d.eat = "baozi"
 d.eat
 
 del d.eat
+'''
