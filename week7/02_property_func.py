@@ -8,8 +8,6 @@ class Dog(object):
         self.name = name
         self.__food = None
 
-
-
     @property
     def eat(self):
         print("%s is eating %s"%(self.name,self.__food))
@@ -22,7 +20,15 @@ class Dog(object):
         del self.__food
         print("delete over")
 
+    def __call__(self, *args, **kwargs):
+        print("running call",args,kwargs)
+
+
 d = Dog("larui")
+d(1,2,3,lay="airvip")
+
+Dog("mm")(1,2,3,lay="airvip")
+
 d.eat
 d.eat = "baozi"
 d.eat
