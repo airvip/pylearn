@@ -7,8 +7,9 @@ import socket
 client = socket.socket()#声明socket类型，同时生成socket连接对象
 client.connect(('localhost',6969))
 
-client.send(b"Hello World!")
+# client.send(b"Hello World!")
+client.send("我是阿尔维奇".encode("utf-8"))
 data = client.recv(1024)
-print("recive data",data)
+print("recive data：",data.decode())
 
 client.close()
