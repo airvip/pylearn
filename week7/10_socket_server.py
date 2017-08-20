@@ -3,6 +3,7 @@
 # -*- coding:utf-8 -*-
 # Created by airvip on 2017/8/19 17:12.
 
+import os
 import socket
 #服务器端
 server = socket.socket()
@@ -22,6 +23,8 @@ while True:
         if not data:
             print("client has lost...")
             break
+        # res = os.popen(data).read()
+        # conn.send(res)
         conn.send(data.upper())
         count +=1
         if count > 10:break
