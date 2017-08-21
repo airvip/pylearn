@@ -4,5 +4,10 @@
 
 class AA(object):
 
+    def __call__(self, *args, **kwargs):
+        print("call")
+
     def __init__(self):
         self.name = 'airvip'
+
+AA()()
