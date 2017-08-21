@@ -11,6 +11,10 @@ lib = __import__("lib.aa")
 obj = lib.aa.AA()
 print(obj.name)
 
+#断言
+assert type(obj.name) is str
+print("airvip111")
+
 '''
 print(mod)
 instance = getattr(mod.aa,'AA')
