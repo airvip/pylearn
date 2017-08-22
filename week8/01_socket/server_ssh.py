@@ -24,6 +24,10 @@ while True:
         if len(cmd_res) == 0:
             cmd_res = "cmd has no output..."
         conn.send(str(len(cmd_res)).encode("utf-8"))
+        # 如果发生粘包
+        # time.sleep(0.5)
+        client_ack = conn.recv(1024)
+        print("now send instructions data")
         conn.send(cmd_res.encode("utf-8"))
         print("send after")
 

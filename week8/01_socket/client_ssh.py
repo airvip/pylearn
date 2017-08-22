@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # Created by airvip on 2017/8/21 16:29.
 
-import socket,os
+import socket,os,time
 
 client = socket.socket()
 
@@ -13,10 +13,11 @@ while True:
     if len(cmd) == 0:continue
     client.send(cmd.encode("utf-8"))
     cmd_res_size = client.recv(1024)#接收命令结果的长度
-    print("instructions result size:",cmd_res_size)
+    print("instructions result size:",cmd_res_size.decode())
+    client.send("now receive data".encode("utf-8"))
     receive_size = 0
     # receive_data = b''
-    print(cmd_res_size.decode())
+    # print(cmd_res_size.decode())
     while receive_size < int(cmd_res_size.decode()):
         data = client.recv(1024)
         receive_size += len(data.decode("utf-8"))#每次收到的有可能小于1024，所以必须用len判断
