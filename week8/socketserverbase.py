@@ -9,13 +9,17 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     def handle(self):
 
         while True:
-            self.data = self.request.recv(1024).strip()
-            print("{} wrote:".format(self.client_address[0]))
-            print(self.data)
-            if not self.data:#client break
-                print(self.client_address,"break")
+            try:
+                self.data = self.request.recv(1024).strip()
+                print("{} wrote:".format(self.client_address[0]))
+                print(self.data.decode('utf-8'))
+                # if not self.data:#client break
+                #     print(self.client_address,"break")
+                #     break
+                self.request.send(self.data.upper())
+            except ConnectionResetError as e:
+                print("err:",e)
                 break
-            self.request.send(self.data.upper())
 
 if __name__ == "__main__":
     HOST,PORT = "localhost",6969
