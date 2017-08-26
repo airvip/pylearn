@@ -13,6 +13,7 @@ server.listen(5)#监听
 print("i wait connect")
 while True:
     conn,addr = server.accept()#等待连接
+<<<<<<< HEAD
     #conn 就是客户端连接过来而在服务器为其生成的一个连接实例
     print(conn,addr)
     print("connect arrived")
@@ -28,5 +29,15 @@ while True:
         conn.send(data.upper())
         count +=1
         if count > 10:break
+=======
+    print(conn,addr)
+    print("connect arrived")
+    while True:
+        data = conn.recv(1024)
+        if not data:
+            break
+        print("recive:",data)
+        conn.send(data.upper())
+>>>>>>> a89e340282576146c3b65a940991de6c0da8da12
 
     server.close()
