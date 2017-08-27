@@ -6,7 +6,7 @@ import threading
 import time
 
 def run(n):
-    print("task done",n)
+    print("task done",n,threading.current_thread())
     time.sleep(2)
 
 start_time = time.time()
