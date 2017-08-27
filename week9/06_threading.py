@@ -6,7 +6,7 @@ import threading
 import time
 
 def run(n):
-    print("task done",n)
+    print("task done",n,threading.current_thread())
     time.sleep(2)
 
 start_time = time.time()
@@ -19,6 +19,7 @@ for i in range(50):
 for t in t_objs:
     t.join()
 
+print("all threads has finished".center(50,"*"),threading.current_thread(),threading.active_count())
 print("cost:",time.time() - start_time)
 
 
