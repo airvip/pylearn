@@ -6,8 +6,9 @@ import threading
 import time
 
 def run(n):
-    print("task done",n,threading.current_thread())
+    print("task",n)
     time.sleep(2)
+    print("task done", n, threading.current_thread())
 
 start_time = time.time()
 t_objs = []
