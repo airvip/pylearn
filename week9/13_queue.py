@@ -3,7 +3,7 @@
 # Created by airvip on 2017/8/31 22:26.
 
 import queue
-
+#last in last out
 q = queue.LifoQueue()
 
 q.put(1)

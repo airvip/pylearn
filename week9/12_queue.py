@@ -4,7 +4,7 @@
 
 
 import queue
-
+#first in first out
 
 q = queue.Queue()
 
