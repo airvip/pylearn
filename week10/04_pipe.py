@@ -9,6 +9,8 @@ from multiprocessing import Pipe,Process
 
 def f(conn):
     conn.send([42,None,'Hello'])
+    conn.send([42,None,'Hello1'])
+    print("from parent:",conn.recv())
     conn.close()
 
 
@@ -17,4 +19,6 @@ if __name__ == '__main__':
     p = Process(target=f,args=(child_conn,))
     p.start()
     print(parent_conn.recv())
+    print(parent_conn.recv())
+    parent_conn.send(("i","am","a","boy"))
     p.join()
