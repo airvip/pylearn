@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>cool think</title>
+    <meta name="keywords" content="d think">
+    <meta name="description" content="cool think">
+
+    <link rel="shortcut icon" href="/admin/static/common/images/favicon.ico">
+    <link href="/static/common/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/common/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/static/common/css/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/common/css/toastr.css">
+    <link href="/static/admin/d/style/d.css" rel="stylesheet"><base target="_blank">
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+</head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <div>
+            <h1 class="logo-name">D</h1>
+        </div>
+        <h3>欢迎使用滇医通</h3>
+
+        <form class="m-t" role="form" action="/admin/nocheck/login">
+            <div class="form-group">
+                <input type="email" name="email_login" class="form-control" placeholder="邮箱" check-type="mail required">
+            </div>
+            <div class="form-group">
+                <input type="password"  name="password" class="form-control" placeholder="密码" check-type="required" minlength="6">
+            </div>
+            <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+            <!--<a href="/admin/nocheck/qr" target="_self" class="btn btn-info block full-width m-b" >二维码登录</a>-->
+            <!--<p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号
+            </p></a>-->
+
+        </form>
+        <p class="text-left">其他方式登录</p>
+        <p class="text-left" data-toggle="modal" data-target="#myModal"><i style="color: #00B500;cursor: pointer;font-size: 18px;" class="fa fa-wechat"></i></p>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="background-color: rgb(51, 51, 51);">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center;color: #FFF;">微信扫码登录</h4>
+            </div>
+            <div class="modal-body">
+                <div class="waiting panelContent">
+                    <div class="wrp_code">
+                        <div class="spinner">
+                            <div class="spinner-container container1">
+                                <div class="circle1"></div>
+                                <div class="circle2"></div>
+                                <div class="circle3"></div>
+                                <div class="circle4"></div>
+                            </div>
+                            <div class="spinner-container container2">
+                                <div class="circle1"></div>
+                                <div class="circle2"></div>
+                                <div class="circle3"></div>
+                                <div class="circle4"></div>
+                            </div>
+                            <div class="spinner-container container3">
+                                <div class="circle1"></div>
+                                <div class="circle2"></div>
+                                <div class="circle3"></div>
+                                <div class="circle4"></div>
+                            </div>
+                        </div>
+                        <img id="ticket" style="display:none" class="qrcode lightBorder" src="">
+                    </div>
+                    <div class="info">
+                        <div class="status status_browser js_status normal" id="wx_default_tip">
+                            <p>请使用微信扫描二维码登录</p>
+                            <p>“滇医通管理系统”</p>
+                        </div>
+                        <div>
+                            <!--<a data-href="/admin/nocheck/login" onclick="mystop()" id="btn-style" >帐号密码登录</a>-->
+                        </div>
+                        <div class="status status_succ js_status normal" style="display:none" id="wx_after_scan">
+                            <i class="status_icon icon38_msg succ"></i>
+                            <div class="status_txt">
+                                <h4>扫描成功</h4>
+                                <p>页面正在为您跳转...</p>
+                            </div>
+                        </div>
+                        <div class="status status_fail js_status normal" style="display:none" id="wx_after_cancel">
+                            <i class="status_icon icon38_msg warn"></i>
+                            <div class="status_txt">
+                                <h4>您已取消此次登录</h4>
+                                <p>您可再次扫描登录，或关闭窗口</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/static/common/script/jquery.min.js"></script>
+<script src="/static/common/script/bootstrap.min.js"></script>
+<script src="/static/common/script/toastr.min.js"></script>
+<script src="/static/admin/d/js/d.toastr.js"></script>
+<script src="/static/common/script/bootstrap.validator.js"></script>
+
+<script src="/static/admin/d/js/d.base.js"></script>
+<script>
+    if (top.location != self.location) {
+        top.location = self.location; //防止页面被框架包含
+    }
+</script>
+
+<!--QR START-->
+<style>
+    .wrp_code>img{margin: 0 auto; display: block;}
+    .status{color: #FFF;text-align: center;margin-top: 5px;}
+    #ticket{width: 200px;}
+
+</style>
+<script async="" src="https://long.open.weixin.qq.com/connect/l/qrconnect?uuid=031Iq8Q8-6r-DrIO&amp;_=1468387516231"></script>
+<script>
+
+    var url = "/admin/nocheck/getticket";
+
+    $(function () {
+        var senceId;
+        $.ajax({
+            url: url,
+            type:'get',
+            dataType:'json',
+            success:function(r){
+                if(r.status == 1){
+                    $('.spinner').hide();
+                    $("#ticket").attr('src',r.data.ticket_url).show();
+                    senceId = r.data.sence;
+                    waitCall("sence" + senceId, function (codeInfo) {
+                        console.log(codeInfo);
+                        $('.status_browser').hide();
+                        $('.status_succ').show();
+                        window.location.href = "/admin/index/index/openid/"+codeInfo.content;
+                    });
+                }
+            }
+        });
+    });
+
+
+    var count = 0;
+    var next_seq = 0;
+    var timestamp = parseInt(new Date().getTime()/1000);
+    function waitCall(id, callback, seq) {
+        next_seq = seq | 0;
+        var server = "/admin/nocheck/server/cb/data/cname/"+ id + "/seq/" + next_seq+'/_/'+timestamp;
+        $.ajax({
+            url: server,
+            type: 'get',
+            dataType: 'json',
+            success: function (msg_data) {
+                if (msg_data instanceof Array) {} else {
+                    msg_data = [msg_data];
+                }
+                for (var k in msg_data) {
+                    var msg = msg_data[k];
+                    if (msg.type == 'data') {
+                        callback && callback(msg);
+                    }else if(msg.type == 'msg'){
+                        console.log(msg.content);
+//                        window.location.reload();
+                    }else if(msg.type == 'noop' && count < 10){
+                        next_seq = parseInt(msg.seq) + 1;
+                        timestamp = parseInt(timestamp)+1;
+                        waitCall(id, callback, next_seq);
+                        count++;
+                        console.log(count);
+                    }else{
+                        window.location.reload();
+                    }
+
+                }
+
+            }
+        });
+    }
+</script>
+<!--QR END-->
+
+
+</body>
+</html>
