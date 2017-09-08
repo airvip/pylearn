@@ -6,7 +6,7 @@
 import select
 import socket
 import sys
-import Queue
+import queue
 
 #create TCP/IP socket
 server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
