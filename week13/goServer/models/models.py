@@ -11,3 +11,15 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+class HostGroup(Base):
+    pass
+
+class RemoteUser(Base):
+    pass
+
+class UserProfile(Base):
+    pass
+
+class AuditLog(Base):
+    pass
+
