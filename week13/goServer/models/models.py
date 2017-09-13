@@ -12,7 +12,10 @@ from sqlalchemy_utils import ChoiceType,PasswordType
 
 Base = declarative_base()
 
-
+user_m2m_bindhost = Table('useer_m2m_bindhost',Base.metadata,
+                          Column("userprofile_id",Integer,ForeignKey('user_profile.id')),
+                          Column("bindhost_id",Integer,ForeignKey('bind_host.id'))
+                          )
 
 class Host(Base):
     __tablename__ = "host"
@@ -78,6 +81,8 @@ class UserProfile(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(32),unique=True)
     password = Column(String(128))
+    bind_hosts = relationship("BindHost",secondary="user_m2m_bindhost",backrep="user_profiles")
+
 
     def __repr__(self):
         return self.username
