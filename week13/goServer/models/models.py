@@ -17,6 +17,16 @@ user_m2m_bindhost = Table('useer_m2m_bindhost',Base.metadata,
                           Column("bindhost_id",Integer,ForeignKey('bind_host.id'))
                           )
 
+bindhost_m2m_hostgroup = Table('bindhost_m2m_hostgroup',Base.metadata,
+                          Column("bindhost_id",Integer,ForeignKey('bind_host.id')),
+                          Column("hostgroup_id",Integer,ForeignKey('host_group.id'))
+                          )
+
+user_m2m_hostgroup = Table('userprofile_m2m_hostgroup',Base.metadata,
+                          Column("userprofile_id",Integer,ForeignKey('user_profile.id')),
+                          Column("hostgroup_id",Integer,ForeignKey('host_group.id'))
+                          )
+
 class Host(Base):
     __tablename__ = "host"
     id = Column(Integer,primary_key=True)
@@ -33,7 +43,7 @@ class HostGroup(Base):
     name = Column(String(64),unique=True)
     ip = Column(String(64),unique=True)
     port = Column(Integer,default=22)
-    remote_users = relationship()
+    bind_hosts = relationship("BindHost",secondary="bindhost_m2m_hostgroup",backref="host_groups")
 
     def __repr__(self):
         return self.name
@@ -68,7 +78,7 @@ class BindHost(Base):
     remoteuser_id = Column(Integer,ForeignKey('remote_usr.id'))
 
     host = relationship("Host",backref="bind_hosts")
-    host_group = relationship("HostGroup",backref="bind_hosts")
+    # host_group = relationship("HostGroup",backref="bind_hosts")
     remote_user = relationship("RemoteUser",backref="bind_hosts")
     def __repr__(self):
         return "<%s -- %s -- %s>"%(self.host.ip,
@@ -82,6 +92,7 @@ class UserProfile(Base):
     username = Column(String(32),unique=True)
     password = Column(String(128))
     bind_hosts = relationship("BindHost",secondary="user_m2m_bindhost",backrep="user_profiles")
+    bind_groups = relationship("HostGroup",secondary="user_m2m_hostgroup",backrep="user_profiles")
 
 
     def __repr__(self):
