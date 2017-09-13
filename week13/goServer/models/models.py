@@ -12,10 +12,7 @@ from sqlalchemy_utils import ChoiceType,PasswordType
 
 Base = declarative_base()
 
-host_m2m_remoteuser = Table('host_m2m_remoteuser',Base.metadata,
-                            Column('hos_id',Integer,ForeignKey('host.id')),
-                            Column('remoteuser_id',Integer,ForeignKey('remote_user.id'))
-                            )
+
 
 class Host(Base):
     __tablename__ = "host"
@@ -23,8 +20,7 @@ class Host(Base):
     hostname = Column(String(64),unique=True)
     ip = Column(String(64),unique=True)
     port = Column(Integer,default=22)
-    remote_users = relationship('RemoteUser',secondary=host_m2m_remoteuser,backref="hosts")
-    
+
     def __repr__(self):
         return self.hostname
 
@@ -53,8 +49,28 @@ class RemoteUser(Base):
     password = Column(String(128))
 
     def __repr__(self):
-        return self.name
+        return self.username
     pass
+
+class BindHost(Base):
+    '''
+    information
+    host ip --- username web---group---
+    '''
+    __tablename__ = "bind_host"
+    __table_args__ = (UniqueConstraint('host_id', 'group_id', 'remoteuser_id', name='_host_group_remoteuser_uc'))
+    id = Column(Integer, primary_key=True)
+    host_id = Column(Integer,ForeignKey('host.id'))
+    group_id = Column(Integer,ForeignKey('group.id'))
+    remoteuser_id = Column(Integer,ForeignKey('remote_usr.id'))
+
+    host = relationship("Host",backref="bind_hosts")
+    host_group = relationship("HostGroup",backref="bind_hosts")
+    remote_user = relationship("RemoteUser",backref="bind_hosts")
+    def __repr__(self):
+        return "<%s -- %s -- %s>"%(self.host.ip,
+                                   self.remote_user.username,
+                                   self.host_group.user)
 
 class UserProfile(Base):
     __tablename__ = "user_profile"
@@ -62,7 +78,9 @@ class UserProfile(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(32),unique=True)
     password = Column(String(128))
-    pass
+
+    def __repr__(self):
+        return self.username
 
 class AuditLog(Base):
     pass
