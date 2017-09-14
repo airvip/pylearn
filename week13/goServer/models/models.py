@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils import ChoiceType,PasswordType
 
-#from sqlalchemy import create_engine
+from sqlalchemy import create_engine
 #from sqlalchemy.orm import sessionmaker
 
 Base = declarative_base()
@@ -100,4 +100,17 @@ class UserProfile(Base):
 
 class AuditLog(Base):
     pass
+
+
+if __name__ == "__main__":
+    engine = create_engine("mysql+pymysql://root:airvip:123456@127.0.0.1/pylearn?charset=utf8")
+
+    Base.metadata.create_all(engine)
+
+
+
+
+
+
+
 
