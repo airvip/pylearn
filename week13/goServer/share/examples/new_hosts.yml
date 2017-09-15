@@ -1,0 +1,12 @@
+
+
+ubuntu test:
+    ip:192.168.1.22
+    port:22
+
+server1:
+    ip:192.168.3.23
+    port:30000
+
+server2:
+    ip:10.100.2.3

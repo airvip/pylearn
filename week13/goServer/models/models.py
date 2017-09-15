@@ -91,7 +91,7 @@ class UserProfile(Base):
     username = Column(String(32),unique=True)
     password = Column(String(128))
     bind_hosts = relationship("BindHost",secondary="user_m2m_bindhost",backrep="user_profiles")
-    bind_groups = relationship("HostGroup",secondary="user_m2m_hostgroup",backrep="user_profiles")
+    bind_groups = relationship("HostGroup",secondary="userprofile_m2m_hostgroup",backrep="user_profiles")
 
 
     def __repr__(self):

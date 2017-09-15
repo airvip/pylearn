@@ -6,5 +6,6 @@
 from modules import views
 
 actions = {
-    "syncdb":views.syncdb
+    "syncdb":views.syncdb,
+    "create_hosts":views.create_hosts,
 }
