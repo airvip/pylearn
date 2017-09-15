@@ -71,7 +71,7 @@ class BindHost(Base):
     host ip --- username web---group---
     '''
     __tablename__ = "bind_host"
-    __table_args__ = (UniqueConstraint('host_id', 'group_id', 'remoteuser_id', name='_host_group_remoteuser_uc'))
+    __table_args__ = (UniqueConstraint('host_id', 'remoteuser_id', name='_host_remoteuser_uc'))
     id = Column(Integer, primary_key=True)
     host_id = Column(Integer,ForeignKey('host.id'))
     group_id = Column(Integer,ForeignKey('group.id'))
@@ -81,9 +81,8 @@ class BindHost(Base):
     # host_group = relationship("HostGroup",backref="bind_hosts")
     remote_user = relationship("RemoteUser",backref="bind_hosts")
     def __repr__(self):
-        return "<%s -- %s -- %s>"%(self.host.ip,
-                                   self.remote_user.username,
-                                   self.host_group.user)
+        return "<%s -- %s>"%(self.host.ip,
+                                   self.remote_user.username)
 
 class UserProfile(Base):
     __tablename__ = "user_profile"
@@ -98,8 +97,8 @@ class UserProfile(Base):
     def __repr__(self):
         return self.username
 
-class AuditLog(Base):
-    pass
+# class AuditLog(Base):
+#     pass
 
 
 if __name__ == "__main__":
