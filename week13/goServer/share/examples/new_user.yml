@@ -1,0 +1,15 @@
+
+
+air:
+    password:abc123
+#    groups:
+#        - web_servers
+#        - db_servers
+#    bind_hosts:
+#        - h1
+#        - h2
+#        - h3
+
+
+air12:
+    password:abc123

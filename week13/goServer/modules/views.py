@@ -49,6 +49,31 @@ def create_remoteuser(argvs):
         session.commit()
 
 
+def create_users(argvs):
+    '''
+    create hosts
+    :return:
+    '''
+    if '-f' in argvs:
+        remoteusers_file = argvs[argvs.index("-f") + 1]
+    else:
+        print_err("invalid usage,should be:\ncreate_users -f <the new users file>",quit=True)
+    source = yaml_parser(remoteusers_file)
+    if source:
+        for key,val in source.items():
+            print(key,val)
+            obj = models.UserProfile(username=key,password=val.get('password'))
+            # if val.get('groups'):
+            #     groups = session.query(models.Group).filter(models.Group.name)
+            #     if not groups:
+            #         print_err("none of [%s] exist in group table."%val.get(''))
+            #     obj.groups = groups
+            # if val.get("bind_hosts"):
+            #     bind_hosts = common_filters.bind_host_filter(val)
+            #     obj.bind_hosts = bind_hosts
+            session.add(obj)
+        session.commit()
+
 
 
 
