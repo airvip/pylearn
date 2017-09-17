@@ -31,6 +31,25 @@ def create_hosts(argvs):
 
 
 
+def create_remoteuser(argvs):
+    '''
+    create hosts
+    :return:
+    '''
+    if '-f' in argvs:
+        remoteusers_file = argvs[argvs.index("-f") + 1]
+    else:
+        print_err("invalid usage,should be:\ncreate_remoteusers -f <the new remoteusers file>",quit=True)
+    source = yaml_parser(remoteusers_file)
+    if source:
+        for key,val in source.items():
+            print(key,val)
+            obj = models.RemoteUser(username=val.get('username'),auth_type=val.get('auth_type'),password=val.get('password'))
+            session.add(obj)
+        session.commit()
+
+
+
 
 
 
