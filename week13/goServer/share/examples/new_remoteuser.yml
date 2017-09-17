@@ -1,0 +1,23 @@
+
+
+
+user0:
+    auth_type:ssh-passwd
+    username:root
+    password:abc!123
+
+
+user1:
+    auth_type:ssh-passwd
+    username:root
+    password:air!123
+
+user2:
+    auth_type:ssh-key
+    username:root
+#    password:air!123
+
+user3:
+    suth_type:ssh-passwd
+    username:air
+    password:air1234
