@@ -1,0 +1,12 @@
+bj_group:
+#    bind_hosts:
+#        - h1
+#        - h2
+    user_profile:
+        -air
+
+sh_group:
+    user_profile:
+        - airvip1
+        - airvip2
+        - airvip3
