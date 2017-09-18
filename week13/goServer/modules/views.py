@@ -99,6 +99,55 @@ def create_users(argvs):
         session.commit()
 
 
+def create_bindhosts(argvs):
+    '''
+    create bind hosts
+    :return:
+    '''
+    if '-f' in argvs:
+        bindhosts_file = argvs[argvs.index("-f") + 1]
+    else:
+        print_err("invalid usage,should be:\ncreate_hosts -f <the new bindhosts file>",quit=True)
+    source = yaml_parser(bindhosts_file)
+    if source:
+        for key,val in source.items():
+            # print(key,val)
+            host_obj = session.query(models.Host).filter(models.Host.hostname == val.get('hostname')).first()
+            assert host_obj
+            for item in val['remote_users']:
+                print(item)
+                assert item.get('auth_type')
+                if item.get('auth_type') == 'ssh-passwd':
+                    remoteuser_obj = session.query(models.RemoteUser).filter(
+                        models.RemoteUser.username == item.get('username'),
+                        models.RemoteUser.password == item.get('password')
+                    ).first()
+                else:
+                    remoteuser_obj = session.query(models.RemoteUser).filter(
+                        models.RemoteUser.username == item.get('username'),
+                        models.RemoteUser.auth_type == item.get('auth_type')
+                    ).first()
+                if not remoteuser_obj:
+                    print_err("RemoteUser obj %s does not exist."%item,quit=True)
+                bindhost_obj = models.BindHost(host_id = host_obj.id,remoteuser_id = remoteuser_obj.id)
+                session.add(bindhost_obj)
+
+                if source[key].get('groups'):
+                    groups_objs = session.query(models.HostGroup).filter(
+                        models.HostGroup.name.in_(source[key].get('groups'))
+                    ).all()
+                    assert groups_objs
+                    print("groups:",groups_objs)
+                    bindhost_obj.host_groups = groups_objs
+
+                if source[key].get('user_profiles'):
+                    userprofile_objs = session.query(models.UserProfile).filter(
+                        models.UserProfile.username.in_(source[key].get('user_profiles'))
+                    ).all()
+                    assert userprofile_objs
+                    print("userprofiles:",userprofile_objs)
+                    bindhost_obj.user_profiles = userprofile_objs
+        session.commit()
 
 
 
