@@ -49,6 +49,30 @@ def create_remoteuser(argvs):
         session.commit()
 
 
+def create_groups(argvs):
+    '''
+    create groups
+    :return:
+    '''
+    if '-f' in argvs:
+        group_file = argvs[argvs.index("-f") + 1]
+    else:
+        print_err("invalid usage,should be:\ncreate_groups -f <the new groups file>",quit=True)
+    source = yaml_parser(group_file)
+    if source:
+        for key,val in source.items():
+            print(key,val)
+            obj = models.HostGroup(name=key)
+            # if val.get('bind_host'):
+            #     bind_hosts = common_filters.bind_hosts_filter(val)
+            #     obj.bind_hosts = bind_hosts
+            # if val.get('user_profiles'):
+            #     user_profiles = common_filters.user_profiles_filter(val)
+            #     obj.user_profiles = user_profiles
+            session.add(obj)
+        session.commit()
+
+
 def create_users(argvs):
     '''
     create hosts
