@@ -26,6 +26,7 @@ class Foo(object):
         return object.__new__(cls)
 
 
+
 #第一阶段：解释器从上到下解释代码创建Foo类
 #第二阶段：通过Foo类创建obj对象
 obj = Foo("air")
