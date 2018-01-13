@@ -38,7 +38,7 @@ resp, lines, octets = popObj.retr(index)
 print(lines)
 
 #获取邮件原始文本
-msg_content =  b'\r\n'.join(lines).decode('utf-8')
+msg_content =  b'\r\n'.join(lines).decode("utf-8")
 #解析html
 content = Parser().parsestr(msg_content)
 print(content)
