@@ -7,10 +7,10 @@ import re
 import json
 import base64
 
-path = 'F:/log/12_system.log'
+path = 'F:/log/15_system.log'
 
 fr = open(path,"r",encoding="utf-8")
-fw = open("err12.log","w",encoding="utf-8")
+fw = open("err15.log","w",encoding="utf-8")
 
 try:
     n = 0
