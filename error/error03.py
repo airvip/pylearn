@@ -4,14 +4,13 @@
 
 def my_divide(x, y):
     try:
-        try:
-            res = x / y
-            return res
-        except NameError:
-            print('error: Name error')
-        except ImportError:
-            print('error: Import error')
-    except :
-        print('error: error undefined')
+        res = x / y
+        return res
+    except ZeroDivisionError:
+        print('error: division by zero!')
+    except TypeError:
+        print('error: Type error')
+    except ImportError:
+        print('error: Import error')
 
-my_divide(4,'4')
+my_divide(4,'4') # 调用
