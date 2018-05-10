@@ -5,7 +5,7 @@
 
 from PIL import Image
 
-img = Image.open('hzw.png')
+img = Image.open('hzw.jpg')
 img.show()
 print(img.info)
 print(img.size)
