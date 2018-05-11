@@ -9,6 +9,6 @@ import requests
 # print(r.text)
 
 
-r = requests.get('https://github.com/search',data={'q':'requests'})
+r = requests.get('https://github.com/search',params={'q':'requests'})
 print(r.status_code)
 print(r.text)
