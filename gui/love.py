@@ -10,7 +10,7 @@ tk.title("是否喜欢我")  # 设置设置窗口标题
 tk.geometry("600x400")  # 设置窗口大小
 tk.resizable(width=False, height=False)  # 设置窗口是否可以改变长 宽
 tk.minsize(width=False, height=False)
-
+tk.iconbitmap('love.ico')
 tk.protocol('WM_DELETE_WINDOW', False)
 
 def love_me():
