@@ -5,9 +5,9 @@
 from PIL import Image
 
 # You can add another str to change chars(left to right, black to white):
-str1 = "@@WW##$$XXoo**""==::''..--  "
+str1 = "@@WW##QQOOoo**--::''      "
 str2 = "01. "
-chars = list(str2)
+chars = list(str1)
 
 
 def get_char(r, b, g, alpha=256):
@@ -19,8 +19,8 @@ def get_char(r, b, g, alpha=256):
 
 if __name__ == '__main__':
     im = Image.open('mz.png')
-    w = im.size[0]
-    h = im.size[1]
+    w = int(im.size[0] / 4)
+    h = int(im.size[1] / 4)
     im = im.resize((w, h), Image.ANTIALIAS)
 
     im = im.convert('RGBA')
@@ -31,5 +31,5 @@ if __name__ == '__main__':
             txt += get_char(*im.getpixel((i, j)))
         txt += '\n'
 
-    with open("chars.txt", 'w+') as f:
+    with open("chars.txt", 'w') as f:
             f.write(txt)
