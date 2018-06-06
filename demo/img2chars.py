@@ -19,10 +19,10 @@ def get_char(r, b, g, alpha=256):
 
 
 if __name__ == '__main__':
-    im = Image.open('F:/zyf.png')
+    im = Image.open('mz.png')
     w = int(im.size[0] / 4)
     h = int(im.size[1] / 4)
-    im = im.resize((w, h), Image.ANTIALIAS)
+    im = im.resize((w, h), Image.ANTIALIAS) # 缩放，抗锯齿
 
     im = im.convert('RGBA')
 
