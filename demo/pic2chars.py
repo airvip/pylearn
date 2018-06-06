@@ -21,7 +21,8 @@ chars = list(str2)
 def get_char(r, b, g, alpha=256):
     if alpha == 0:
         return ' '
-    gray = int(0.2126 * r + 0.7152 * g + 0.0722 * b)
+    # gray = int(0.2126 * r + 0.7152 * g + 0.0722 * b)
+    gray = int(19595 * r + 38469 * g + 7472 * b) >> 16
     return chars[int(gray / 256.0 * len(chars))]
 
 
