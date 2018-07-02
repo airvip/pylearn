@@ -7,6 +7,7 @@ import decimal
 
 root = Tk()
 root.title('计算器')
+root.iconbitmap('computer.ico')
 root.resizable(width=False, height=False)
 
 result = op = None
