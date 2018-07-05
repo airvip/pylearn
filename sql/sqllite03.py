@@ -17,6 +17,8 @@ try:
 
     cursor.execute("select * from user")
     print(cursor.fetchall())
+
+    cursor.close()
 finally:
     conn.close()
 
