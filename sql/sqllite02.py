@@ -7,7 +7,7 @@ conn = sqlite3.connect('test.db')
 
 try:
     cursor =conn.cursor()
-    # cursor.execute("DROP TABLE user")
+    cursor.execute("DROP TABLE user")
 
     cursor.execute("select name from sqlite_master where type='table'")
     print(cursor.fetchall())
@@ -19,6 +19,8 @@ try:
 
     cursor.execute("select name from sqlite_master where type='table'")
     print(cursor.fetchall())
+
+    cursor.close()
 finally:
     conn.close()
 
