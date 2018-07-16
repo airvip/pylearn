@@ -6,11 +6,12 @@ import time
 
 def blocking_way():
     s = requests.get('https://www.baidu.com/')
-    return s
+    print(s)
 
 
 
 if __name__ == "__main__":
+
     start_time = time.time()
     for i in range(10):
         blocking_way()
