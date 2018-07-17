@@ -14,14 +14,14 @@ def blocking_way():
     requests = 'GET / HTTP/1.1\r\n Host:www.baidu.com\r\nConnection: close\r\n\r\n'.encode('utf-8')
     client.send(requests)
 
-    res = ''
+    res = b''
     slice_res = client.recv(2048)
     while slice_res:
-        res += slice_res.decode('utf-8')
+        res += slice_res
         # 阻塞接收
         slice_res = client.recv(2048)
 
-    print(len(res))
+    print(len(res.decode('utf-8')))
     client.close()
 
 
