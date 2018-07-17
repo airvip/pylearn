@@ -5,7 +5,7 @@ import requests
 import threading
 import time
 
-def blocking_way():
+def get_baidu():
     s = requests.get('https://www.baidu.com/')
     print(s)
 
@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     start_time = time.time()
     for i in range(10):
-        i = threading.Thread(target=blocking_way)
+        i = threading.Thread(target=get_baidu)
         i.start()
 
     end_time = time.time()

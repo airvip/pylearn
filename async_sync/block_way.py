@@ -4,7 +4,7 @@
 import requests
 import time
 
-def blocking_way():
+def get_baidu():
     s = requests.get('https://www.baidu.com/')
     print(s)
 
@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     start_time = time.time()
     for i in range(10):
-        blocking_way()
+        get_baidu()
 
     end_time = time.time()
     print('同步阻塞调用耗时 %s 秒' % (end_time-start_time))
