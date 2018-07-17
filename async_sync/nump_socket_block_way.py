@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+
+
+import socket
+import multiprocessing
+import time
+
+def blocking_way():
+
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    client.connect(('www.baidu.com', 80))
+    requests = 'GET / HTTP/1.1\r\n Host:www.baidu.com\r\nConnection: close\r\n\r\n'.encode('utf-8')
+    client.send(requests)
+
+    res = ''
+    slice_res = client.recv(2048)
+    while slice_res:
+        res += slice_res.decode('utf-8')
+        # 阻塞接收
+        slice_res = client.recv(2048)
+
+    print(len(res))
+    client.close()
+
+
+if __name__ == '__main__':
+    start_time = time.time()
+    for i in range(10):
+        i = multiprocessing.Process(target=blocking_way)
+        i.start()
+    end_time = time.time()
+    print('多进程并行调用耗时 %s 秒' % (end_time - start_time))
+
+
+
