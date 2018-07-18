@@ -17,7 +17,7 @@ def no_blocking_way():
 
     requests = 'GET / HTTP/1.1\r\n Host:www.baidu.com\r\nConnection: close\r\n\r\n'.encode('utf-8')
 
-    while True:
+    while True: # 由于不知链接何时成功建立，一直尝试发送
         try:
             client.send(requests) # 直到send不抛异常，则发送完成
             break
@@ -25,7 +25,7 @@ def no_blocking_way():
             pass
 
     res = b''
-    while True:
+    while True: # 由于不知道何时发送请求成功，一直尝试接收
         try:
             slice_res = client.recv(2048)
             while slice_res:
