@@ -45,4 +45,4 @@ if __name__ == '__main__':
     for i in range(10):
         no_blocking_way()
     end_time = time.time()
-    print('同步阻塞调用耗时 %s 秒' % (end_time - start_time))
+    print('非阻塞调用耗时 %s 秒' % (end_time - start_time))
