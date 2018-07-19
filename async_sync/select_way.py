@@ -31,6 +31,7 @@ class Callnext(object):
     def read_response(self, conn, mask):
         global tag
         slice_res = conn.recv(2048)
+
         if slice_res:
             self.res += slice_res
         else:
@@ -42,7 +43,7 @@ class Callnext(object):
 
 if __name__ == '__main__':
     start_time = time.time()
-    for i in range(10):
+    for i in range(tag):
         call = Callnext()
         call.accept()
 
