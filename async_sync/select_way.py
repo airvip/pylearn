@@ -52,7 +52,7 @@ if __name__ == '__main__':
         events = sel.select()
         for key, mask in events:
             callback = key.data
-            callback(key.fileobj, mask)
+            callback(key.fileobj, mask)  # key.fileobj 就是 send与read_response 中的一个socket连接对象
 
     end_time = time.time()
     print('callback调用耗时 %s 秒' % (end_time - start_time))
