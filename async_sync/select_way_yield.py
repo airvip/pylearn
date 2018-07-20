@@ -22,7 +22,6 @@ class Future(object):
             fn(self)
 
 class Callnext(object):
-
     def __init__(self):
         self.res = b''
 
@@ -46,7 +45,6 @@ class Callnext(object):
         conn.send(requests)
 
         global tag
-
         while tag:
             f = Future()
 
@@ -54,30 +52,28 @@ class Callnext(object):
                 f.set_result(conn.recv(2048))
 
             sel.register(conn, selectors.EVENT_READ, read_response)
-
             slice_res = yield f
             sel.unregister(conn)
             if slice_res:
                 self.res += slice_res
             else:
-
                 tag -= 1
                 print(len(self.res.decode('utf-8')))
                 conn.close()
                 break
 
-class Task:
-    def __init__(self, coro):
-        self.coro = coro
+class Task(object):
+    def __init__(self, conn):
+        self.conn = conn
         f = Future()
-        # f.set_result(None)
         self.step(f)
 
     def step(self, future):
         try:
-            # send会进入到coro执行, 即accept, 直到下次yield
-            # next_future 为yield返回的对象
-            next_future = self.coro.send(future.result)
+            # send 会进入到 conn 执行, 即:accept, 直到下次 yield
+            # next_future 为 yield 返回的对象
+            # 第一次启动 future.result 为 None
+            next_future = self.conn.send(future.result)
         except StopIteration:
             return
         next_future.add_done_callback(self.step)
@@ -93,8 +89,6 @@ if __name__ == '__main__':
         # 一直阻塞, 直到一个事件发生
         events = sel.select()
         for key, mask in events:
-            print(key)
-            print(key.data)
             callback = key.data
             callback()
 
