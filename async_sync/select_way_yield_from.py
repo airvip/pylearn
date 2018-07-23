@@ -21,45 +21,60 @@ class Future(object):
         for fn in self._callbacks:
             fn(self)
 
+    def __iter__(self):
+        yield self
+        return self.result
+
+def to_connect(sock, addr):
+    sock.setblocking(False)
+    try:
+        sock.connect(addr)
+    except BlockingIOError:
+        pass
+
+    f = Future()
+    def on_connected():
+        f.set_result(None)
+
+    sel.register(sock, selectors.EVENT_WRITE, on_connected)
+    yield from f
+    sel.unregister(sock)
+
+def read(sock):
+    f = Future()
+
+    def readable():
+        f.set_result(sock.recv(2048))
+
+    sel.register(sock, selectors.EVENT_READ, readable)
+    slice_res = yield from f
+    sel.unregister(sock)
+    return slice_res
+
+def read_all(sock):
+    reponse = b''
+    slice_res = yield from read(sock)
+    while slice_res:
+        reponse += slice_res
+        slice_res = yield from read(sock)
+    return  reponse
+
+
 class Callbaidu(object):
     def __init__(self):
         self.res = b''
 
     def accept(self):
-        conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        conn.setblocking(False)
-        try:
-            conn.connect(('115.239.211.112', 80))
-        except BlockingIOError:
-            pass
-
-        f = Future()
-        def on_connected():
-            f.set_result(None)
-
-        sel.register(conn, selectors.EVENT_WRITE, on_connected)
-        yield f
-        sel.unregister(conn)
-
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        yield from to_connect(sock, ('115.239.211.112', 80))
         requests = 'GET / HTTP/1.1\r\n Host:www.baidu.com\r\nConnection: close\r\n\r\n'.encode('utf-8')
-        conn.send(requests)
+        sock.send(requests)
+        self.res = yield from read_all(sock)
+        print(len(self.res))
 
         global tag
-        while tag:
-            f = Future()
-            def read_response():
-                f.set_result(conn.recv(2048))
+        tag -= 1
 
-            sel.register(conn, selectors.EVENT_READ, read_response)
-            slice_res = yield f
-            sel.unregister(conn)
-            if slice_res:
-                self.res += slice_res
-            else:
-                tag -= 1
-                print(len(self.res.decode('utf-8')))
-                conn.close()
-                break
 
 
 class Task(object):
@@ -85,7 +100,6 @@ if __name__ == '__main__':
         call = Callbaidu()
         Task(call.accept())
 
-
     while tag:
         # 一直阻塞, 直到一个事件发生
         events = sel.select()
@@ -94,4 +108,4 @@ if __name__ == '__main__':
             callback()
 
     end_time = time.time()
-    print('yield 调用耗时 %s 秒' % (end_time - start_time))
+    print('yield from调用耗时 %s 秒' % (end_time - start_time))
