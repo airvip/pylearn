@@ -8,7 +8,7 @@ import time
 sel = selectors.DefaultSelector()
 tag = 10
 
-class Callnext(object):
+class Callbaidu(object):
     def __init__(self):
         self.conn = None
         self.res = b''
@@ -44,7 +44,7 @@ class Callnext(object):
 if __name__ == '__main__':
     start_time = time.time()
     for i in range(tag):
-        call = Callnext()
+        call = Callbaidu()
         call.accept()
 
     while tag:
