@@ -88,6 +88,7 @@ if __name__ == '__main__':
         call = Callbaidu()
         Task(call.accept())
 
+
     while tag:
         # 一直阻塞, 直到一个事件发生
         events = sel.select()
