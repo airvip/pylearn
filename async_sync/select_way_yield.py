@@ -6,7 +6,7 @@ import selectors
 import time
 
 sel = selectors.DefaultSelector()
-tag = 1
+tag = 10
 
 class Future(object):
     def __init__(self):
@@ -21,7 +21,7 @@ class Future(object):
         for fn in self._callbacks:
             fn(self)
 
-class Callnext(object):
+class Callbaidu(object):
     def __init__(self):
         self.res = b''
 
@@ -47,7 +47,6 @@ class Callnext(object):
         global tag
         while tag:
             f = Future()
-
             def read_response():
                 f.set_result(conn.recv(2048))
 
@@ -61,6 +60,10 @@ class Callnext(object):
                 print(len(self.res.decode('utf-8')))
                 conn.close()
                 break
+
+'''
+PEP 342 中，生成器可以通过 yield 暂停执行和向外返回数据，也可以通过 send() 向生成器内发送数据，还可以通过 throw() 向生成器内抛出异常以便随时终止生成器的运行。
+'''
 
 class Task(object):
     def __init__(self, conn):
@@ -82,7 +85,7 @@ class Task(object):
 if __name__ == '__main__':
     start_time = time.time()
     for i in range(tag):
-        call = Callnext()
+        call = Callbaidu()
         Task(call.accept())
 
     while tag:
