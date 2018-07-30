@@ -3,6 +3,7 @@
 
 import time
 
+
 def eat():
     print("老板上包子")
     bao = ''
@@ -12,7 +13,23 @@ def eat():
         time.sleep(0.1)
 
 def consumer():
-    yield from eat()
+    geat = eat()
+    bao = None
+    res = geat.send(bao)
+    while True:
+        try:
+            bao = yield res
+            res = geat.send(bao)
+        except StopIteration:
+            break
+        except Exception as err:
+            try:
+                res = geat.throw(err)
+            except StopIteration:
+                break
+
+
+
 
 def producer(c):
     c.send(None)
@@ -22,6 +39,7 @@ def producer(c):
         print("[生产者]-生产第 %s 个包子"%n)
         c.send("包子 {}".format(n))
     c.close()
+
 
 producer(consumer())
 
