@@ -4,13 +4,15 @@
 import aiohttp
 import asyncio
 
+async def fetch(session, url):
+    async with session.get(url) as response:
+        return await response.text()
+
 async def main():
     async with aiohttp.ClientSession() as session:
-        async with session.get('http://www.baidu.com') as response:
-            res = await response.text()
-            print(res)
+        html = await fetch(session, 'http://www.baidu.com')
+        print(html)
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
-    loop.close()
