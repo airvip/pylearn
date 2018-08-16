@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login.html</title>
+</head>
+<body>
+    {% if msg %}
+    <b>{{ msg }}</b>
+    {% endif %}
+    <form action="/login" method="post">
+        昵称：<input type="text" name="name"/><br/>
+        密码：<input type="password" name="pass"/><br/>
+        <button type="submit">登录</button>
+    </form>
+</body>
+</html>
