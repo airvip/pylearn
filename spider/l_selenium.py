@@ -11,7 +11,7 @@ browser.get("https://www.baidu.com")
 # browser.close()
 
 
-browser.find_elements_by_class_name()
+
 
 head1 = browser.find_element_by_id("head")  # id 为 head
 head2 = browser.find_element_by_css_selector("#head")  # css 选择器
