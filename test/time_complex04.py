@@ -3,8 +3,16 @@
 # Created by airvip on 2018/8/29 17:43.
 
 def use_t(n):
-    print('走路中')
-    print('走了一米')
+    i = 0
+    while i < n:
+        j = 0
+        while j < i:
+            print('走路中')
+            j += 1
+        print('记录点...')
+        i += 1
+
+
 
 
 
