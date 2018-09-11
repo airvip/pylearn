@@ -104,4 +104,4 @@ def img_name_processor(src):
 
 
 if __name__ == "__main__":
-    save_img('test.jpg','https://images.pexels.com/photos/458766/pexels-photo-458766.jpeg?auto=compress&cs=tinysrgb&h=350')
+    save_img('test.jpg','https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1536568044&di=b42e9860ab531f6f8ab53f52bb4ec156&src=http://tva2.sinaimg.cn/crop.0.0.1994.1123/90eb2137ly1fm7btcwyezj21jk0v9e81.jpg')
