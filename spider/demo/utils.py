@@ -1,4 +1,7 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+
+
 import os
 import requests
 import hashlib
@@ -6,6 +9,8 @@ import time
 from random import random
 from datetime import datetime
 import logging
+
+
 
 today = datetime.today().date()
 

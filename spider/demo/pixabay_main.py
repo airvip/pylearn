@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2018/5/14 11:02
-# @Author  : 陈子昂
+#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+
+
 import os
 import requests
 from bs4 import BeautifulSoup
