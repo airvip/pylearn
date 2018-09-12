@@ -54,5 +54,5 @@ def pixabay(keyword):
 
 
 if __name__ == "__main__":
-    # 女脸，女性 脸，美女，
+    # 女性 脸，美女，
     pixabay('美女')
