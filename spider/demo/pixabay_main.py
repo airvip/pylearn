@@ -30,7 +30,6 @@ def pixabay(keyword):
         res = requests.get(url)
         soup = BeautifulSoup(res.text, 'lxml')
         items = soup.select('.credits .item')
-        # print(items)
         for item in items:
             img_attrs = item.a.img.attrs
             if img_attrs['src'] == '/static/img/blank.gif':
@@ -42,7 +41,8 @@ def pixabay(keyword):
                 os.makedirs(path)
             filename = img_name_processor(img_src)
             file = os.path.join(path, filename)
-            rt = save_img(file=file, src=img_src) # 是save_img的返回值，
+            # 是save_img的返回值，
+            rt = save_img(file=file, src=img_src)
             img_cnt += 1
             if img_cnt == pic_num:
                 print("已搜集{}张{}图片，程序退出...".format(img_cnt, key))
