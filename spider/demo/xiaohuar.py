@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 import re
 from tqdm import tqdm
 import os
-from utils import save_img,  img_name_processor
+import hashlib
+import urllib.request
 
 def getxiaohua():
     img_cnt = 0
@@ -32,15 +33,28 @@ def getxiaohua():
             filename = img_name_processor(img_attrs['src'])
             file = os.path.join(path, filename)
             # 是save_img的返回值，
-            res = save_img(file=file, src='http://www.xiaohuar.com'+img_attrs['src'])
-            img_cnt += 1
-            if img_cnt == img_num:
+            # res = save_img(file=file, src='http://www.xiaohuar.com'+img_attrs['src'])
+            if int(img_cnt) - 50 > int(img_num):
                 print("已搜集{}张图片，程序退出...".format(img_cnt))
                 break
-            if res:
-                print('第{}张图片保存成功...'.format(img_cnt))
+            img_cnt += 1
+            if os.path.exists(file):
+                print('{}文件已经存在，跳过'.format(file))
             else:
-                print('第{}张图片保存失败...'.format(img_cnt))
+                try:
+                    urllib.request.urlretrieve('http://www.xiaohuar.com'+img_attrs['src'], file)
+                    print('第{}张图片保存成功...'.format(img_cnt))
+                except Exception as e:
+                    print('--{}--'.format(e))
+                    print('第{}张图片保存失败...'.format(img_cnt))
+
+
+def img_name_processor(src):
+    h5 = hashlib.md5()
+    h5.update(src.encode('utf-8'))
+    ext_split = src.split('.')
+    img = h5.hexdigest() + '.' + ext_split[len(ext_split) - 1]
+    return img
 
 
 if '__main__' == __name__:

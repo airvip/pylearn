@@ -36,7 +36,8 @@ def save_img(file, src):
     else: # This is done simply to dedup process
         try:
             headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'}
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36'
+            }
             res = requests.get(src, timeout=3, verify=False,headers=headers)
             # print(res.content)
         except Exception as e:
@@ -91,16 +92,12 @@ def path_processor(site, folder):
 
 
 def img_name_processor(src):
-    """
-    This function is used to handle the file name of the saved picture.
-    Hash the URL of the picture as its filename.
-    :param src: image url
-    :return: image filename
-    """
     h5 = hashlib.md5()
     h5.update(src.encode('utf-8'))
-    img = h5.hexdigest() + '.jpg'
+    ext_split = src.split('.')
+    img = h5.hexdigest() + '.' + ext_split[len(ext_split) - 1]
     return img
+
 
 
 if __name__ == "__main__":
