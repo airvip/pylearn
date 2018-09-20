@@ -21,16 +21,6 @@ logging.basicConfig(level=logging.INFO,
     filemode='a')
 
 def save_img(file, src):
-    '''
-    This function is used to save pictures.
-    Initiates an HTTP request to the picture URL,
-    gets the binary code,
-    writes the code to the local file,
-    and completes the preservation of a picture.
-    :param file:folder path
-    :param src: image url
-    :return:
-    '''
     if os.path.exists(file):
         print('-{}已存在，跳过。-'.format(file))
     else: # This is done simply to dedup process
