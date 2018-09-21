@@ -91,4 +91,4 @@ def img_name_processor(src):
 
 
 if __name__ == "__main__":
-    save_img('0.jpg','https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536841232716&di=abf764527ebf6363e50ed8ff1166f319&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201606%2F26%2F20160626093605_jEJtx.jpeg')
+    save_img('0.jpg','https://p3a.pstatp.com/weili/l/189459245242253771.jpg')

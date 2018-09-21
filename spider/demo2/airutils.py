@@ -6,6 +6,7 @@ import os
 import sys
 import math
 import requests
+from urllib import request
 import urllib3
 import hashlib
 
@@ -27,7 +28,7 @@ def save_img(img_url, file_name, file_path = './img/'):
     if not os.path.exists(file_path):
         os.makedirs(file_path)
 
-    all_path = file_path + file_name
+    all_path = os.path.join(file_path, file_name)
     if os.path.exists(all_path):
         print('{}文件已经存在，跳过'.format(all_path))
     else:
@@ -36,22 +37,38 @@ def save_img(img_url, file_name, file_path = './img/'):
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.92 Safari/537.36'
             }
             urllib3.disable_warnings()
-            with requests.get(img_url, timeout=3, verify=False, headers=headers, stream=True) as response:
+            with requests.get(img_url, timeout=10, verify=False, headers=headers, stream=True) as response:
+                if 'content-length' in response.headers.keys():
                 # request.urlretrieve(img_url, all_path, reporthook=schedule)
-                total_size = int(response.headers['content-length'])
-                size = 0 # 已保存资源大小
-                chunk_size = 1024 # 每次保存资源大小
-                print('[ %s 文件大小]：%.2f MB' % (file_name,(total_size / chunk_size / 1024)), end='')
-                with open(all_path, 'wb') as file:
-                    for chunk in response.iter_content(chunk_size):
-                        if chunk:
-                            file.write(chunk)
-                            size += len(chunk)
-                            print('\r'+'[下载进度]：%s %.2f %%' %('>'*int(size*50/total_size), float(size/total_size*100)), end='')
-            print()
-            return True
+                    total_size = int(response.headers['content-length'])
+                    size = 0 # 已保存资源大小
+                    chunk_size = 1024 # 每次保存资源大小
+                    print('[文件大小]：%.2f MB' % ((total_size / chunk_size / 1024)), end='')
+                    with open(all_path, 'wb') as file:
+                        for chunk in response.iter_content(chunk_size):
+                            if chunk:
+                                file.write(chunk)
+                                size += len(chunk)
+                                print('\r'+'[下载进度]：%s %.2f %%' %('>'*int(size*50/total_size), float(size/total_size*100)), end='')
+                elif 'transfer-encoding' in response.headers.keys() and 'chunked' == response.headers['transfer-encoding']:
+                    # request.urlretrieve(img_url, all_path, reporthook=schedule)
+                    with open(all_path, 'wb') as file:
+                        print('[下载进度]：', end='')
+                        for chunk in response.iter_content(1024):
+                            if chunk:
+                                file.write(chunk)
+                                sys.stdout.write('>')
+                                sys.stdout.flush()
+                        else:
+                            sys.stdout.write(' 100.00 %')
+                            sys.stdout.flush()
+                else:
+                    return False
+                print()
+                return True
         except Exception as e:
-            print('--{}保存失败--{}--'.format(all_path, e))
+            print(img_url)
+            print('--[保存失败]：{}--'.format(e))
             return False
 
 def name_processor(file_path):
@@ -59,7 +76,7 @@ def name_processor(file_path):
     h5.update(file_path.encode('utf-8'))
     # 获得后缀
     file_suffix = os.path.splitext(file_path)[-1]
-    name = h5.hexdigest() + '.' + file_suffix
+    name = h5.hexdigest() + file_suffix
     return name
 
 if __name__ == '__main__':

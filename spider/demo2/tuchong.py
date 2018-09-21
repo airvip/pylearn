@@ -3,15 +3,15 @@
 
 import time
 
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import random
 import airutils
+import re
 
 
 
-def tuchongfree(keyword: str, pages=10):
+def tuchongfree(keyword: str, pages=3):
     """本函数用于爬共享图库"""
     img_cnt = 0
     driver=webdriver.Chrome()
@@ -25,25 +25,21 @@ def tuchongfree(keyword: str, pages=10):
         time.sleep(random.randint(1, 4))
         items = driver.find_elements_by_class_name('img')
         for item in items:
-            print(item)
             src = item.get_attribute('style')
-            print(src)
-            # if not src:
-            #     continue
-            # filename = airutils.name_processor(src)
-            # path = 'D:/tuchong_com/{}'.format(keyword)
-            # if not os.path.exists(path):
-            #     os.makedirs(path)
-            # file = os.path.join(path, filename)
-            # res = airutils.save_img(file=file, src=src)
-            # img_cnt += 1
-            # if res:
-            #     print('第{}图片保存成功...'.format(img_cnt))
-            # else:
-            #     print('第{}张图片保存失败...'.format(img_cnt))
+            if not src:
+                continue
+            img_src = 'https://' + re.search('"//(.*)\.webp"',src).group(1) + '.jpg'
+            filename = airutils.name_processor(img_src)
+            path = 'D:/tuchong_com/{}'.format(keyword)
+            res = airutils.save_img(img_url=img_src, file_name=filename, file_path=path)
+            img_cnt += 1
+            if res:
+                print('第{}张图片{}保存成功...'.format(img_cnt, filename))
+            else:
+                print('第{}张图片{}保存失败...'.format(img_cnt, filename))
+
 
     driver.close()
 
 if __name__ == "__main__":
-    # 女脸，女脸部，
-    tuchongfree(keyword='风景', pages=10)
+    tuchongfree(keyword='女孩', pages=1)
