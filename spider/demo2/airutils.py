@@ -37,6 +37,7 @@ def save_img(img_url, file_name, file_path = './img/'):
             }
             urllib3.disable_warnings()
             with requests.get(img_url, timeout=3, verify=False, headers=headers, stream=True) as response:
+                # request.urlretrieve(img_url, all_path, reporthook=schedule)
                 total_size = int(response.headers['content-length'])
                 size = 0 # 已保存资源大小
                 chunk_size = 1024 # 每次保存资源大小
