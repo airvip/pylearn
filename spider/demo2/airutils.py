@@ -80,4 +80,4 @@ def name_processor(file_path):
     return name
 
 if __name__ == '__main__':
-    save_img('https://p3a.pstatp.com/weili/l/189459245242253771.jpg', './scense.jpg')
+    save_img('http://mvvideo11.meitudata.com/5ba78d33478105970.mp4', './jiajia.mp4')
